@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101a17">
+  <title>DT DBK — Database Unit</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0d1412;--panel:#151e1b;--panel2:#1b2622;--line:#293731;--text:#edf4ef;--muted:#91a198;--green:#9fe870;--green2:#253c28;--red:#ff887a;--red2:#402725;--amber:#e5ba69}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% 0%,#1d3025 0,transparent 36rem),var(--bg);color:var(--text);font:13px/1.35 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+    button,input{font:inherit}button{color:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:20px 16px 36px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.brand{display:flex;align-items:center;gap:11px}.mark{width:39px;height:39px;border-radius:12px;background:var(--green);display:grid;place-items:center;color:#142015;font-weight:900;font-size:15px;letter-spacing:-1px}.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}h1{font-size:19px;line-height:1.15;margin:2px 0 0;letter-spacing:-.4px}.site-tag{border:1px solid var(--line);border-radius:999px;padding:7px 10px;color:#c4d2c9;font-size:11px;white-space:nowrap}
+    .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:12px}.stat,.card{background:linear-gradient(145deg,#18221e,#131a18);border:1px solid var(--line);border-radius:13px}.stat{padding:11px 13px}.stat-label{color:var(--muted);font-size:10px}.stat-value{font-size:21px;font-weight:750;margin-top:3px;letter-spacing:-.5px}.stat.ready .stat-value{color:var(--green)}.stat.down .stat-value{color:var(--red)}
+    .card{padding:13px;margin-bottom:11px}.section-title{font-size:12px;font-weight:700;margin:0 0 9px}.copy-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.copy-box{min-width:0}.copy-head{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:5px;font-size:11px;font-weight:700}.copy-head span{display:flex;align-items:center;gap:6px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green)}.dot.red{background:var(--red)}.copy-area{width:100%;height:55px;resize:vertical;border:1px solid var(--line);border-radius:8px;background:#0d1412;color:#cbd8cf;padding:7px;font:11px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace}.btn{border:1px solid var(--line);background:var(--panel2);border-radius:8px;padding:6px 9px;font-size:11px;font-weight:650;transition:.15s}.btn:hover{border-color:#52665a;filter:brightness(1.13)}.btn-copy{color:#d8e6db}.toolbar{display:flex;align-items:center;gap:8px;margin-bottom:9px}.search{flex:1;min-width:0;height:35px;background:#111917;border:1px solid var(--line);border-radius:8px;color:var(--text);padding:0 10px;outline:none}.search:focus,input:focus{border-color:#729e63}.btn-add{background:var(--green);border-color:var(--green);color:#152014;padding:8px 12px}.filter{display:flex;gap:5px}.filter button{padding:7px 9px;color:var(--muted)}.filter button.active{background:#26372c;color:var(--green);border-color:#405e43}
+    .add-form{display:none;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:10px}.add-form.open{display:grid}.field{width:100%;height:35px;border:1px solid var(--line);border-radius:8px;background:#111917;color:var(--text);padding:0 9px;outline:none}.add-form select{color:#dce7df}.unit-list{overflow:hidden;padding:0}.list-head,.unit-row{display:grid;grid-template-columns: minmax(100px,1.3fr) minmax(75px,1fr) minmax(182px,1.15fr);align-items:center;gap:10px;padding:7px 12px}.list-head{background:#19221f;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.65px}.unit-row{border-top:1px solid #222e29;min-height:37px}.unit-row:hover{background:#19231f}.unit-name{font-weight:680;letter-spacing:.1px;font-size:12px}.unit-note{font-size:10px;color:var(--amber);margin-left:5px;font-weight:500}.status{border:1px solid transparent;border-radius:999px;padding:3px 8px;font-size:10px;font-weight:700;white-space:nowrap}.status.ready{background:var(--green2);color:var(--green);border-color:#35553a}.status.breakdown{background:var(--red2);color:var(--red);border-color:#603b37}.row-actions{display:flex;gap:5px;justify-content:flex-end}.status-btn{padding:4px 8px;font-size:10px}.status-btn.ready-btn{color:var(--green)}.status-btn.down-btn{color:var(--red)}.delete-btn{color:#a7b3ac;padding:4px 7px}.empty{padding:24px;text-align:center;color:var(--muted)}.foot{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;padding:8px 2px}.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#e8f4e9;color:#142016;padding:9px 14px;border-radius:9px;font-size:12px;font-weight:700;transition:.2s;box-shadow:0 8px 28px #0008}.toast.show{opacity:1;transform:translate(-50%,0)}
+    @media(max-width:540px){.app{padding:14px 10px 24px}.top{margin-bottom:13px}.summary{gap:6px}.stat{padding:9px}.stat-value{font-size:19px}.copy-grid{gap:7px}.card{padding:10px}.toolbar{gap:5px;flex-wrap:wrap}.search{flex-basis:100%;order:0;height:34px}.filter{order:1;flex:1}.btn-add{order:2}.filter button{padding:6px 7px}.list-head,.unit-row{grid-template-columns:minmax(83px,1fr) 75px minmax(142px,1.25fr);gap:5px;padding:7px 8px}.list-head{font-size:9px}.unit-name{font-size:11px}.unit-note{display:block;margin:1px 0 0;font-size:9px}.status-btn{padding:4px 6px;font-size:9px}.delete-btn{padding:4px 5px}.row-actions{gap:3px}.status{font-size:9px;padding:3px 6px}.site-tag{font-size:10px;padding:6px 8px}}
+    @media(max-width:365px){.list-head,.unit-row{grid-template-columns:minmax(72px,1fr) 67px minmax(130px,1.25fr);padding-left:6px;padding-right:6px}.status-btn{font-size:8px;padding:4px}.copy-head{font-size:10px}.btn-copy{font-size:10px;padding:5px 7px}}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <div class="brand"><div class="mark">DT</div><div><div class="eyebrow">Database armada</div><h1>Dump Truck · Site DBK</h1></div></div>
+      <div class="site-tag">SITE&nbsp; DBK</div>
+    </header>
+    <section class="summary" aria-label="Ringkasan unit">
+      <div class="stat"><div class="stat-label">Total unit</div><div class="stat-value" id="totalCount">57</div></div>
+      <div class="stat ready"><div class="stat-label">Ready</div><div class="stat-value" id="readyCount">47</div></div>
+      <div class="stat down"><div class="stat-label">Breakdown</div><div class="stat-value" id="downCount">10</div></div>
+    </section>
+    <section class="card">
+      <h2 class="section-title">Salin daftar unit</h2>
+      <div class="copy-grid">
+        <div class="copy-box"><div class="copy-head"><span><i class="dot"></i>Ready <span id="readyCopyCount">(47)</span></span><button class="btn btn-copy" data-copy="ready">Salin</button></div><textarea class="copy-area" id="readyText" readonly aria-label="Daftar unit ready"></textarea></div>
+        <div class="copy-box"><div class="copy-head"><span><i class="dot red"></i>Breakdown <span id="downCopyCount">(10)</span></span><button class="btn btn-copy" data-copy="breakdown">Salin</button></div><textarea class="copy-area" id="downText" readonly aria-label="Daftar unit breakdown"></textarea></div>
+      </div>
+    </section>
+    <section class="toolbar" aria-label="Kontrol daftar">
+      <input id="search" class="search" type="search" placeholder="Cari nomor unit atau keterangan…" aria-label="Cari unit">
+      <div class="filter"><button class="btn active" data-filter="all">Semua</button><button class="btn" data-filter="ready">Ready</button><button class="btn" data-filter="breakdown">Breakdown</button></div>
+      <button class="btn btn-add" id="showAdd">＋ Input unit</button>
+    </section>
+    <form class="add-form" id="addForm">
+      <input class="field" id="unitInput" placeholder="Nomor unit, contoh: 319" inputmode="numeric" required aria-label="Nomor unit">
+      <input class="field" id="noteInput" placeholder="Keterangan (opsional)" aria-label="Keterangan unit">
+      <button class="btn btn-add" type="submit">Tambah</button>
+    </form>
+    <section class="card unit-list" aria-label="Daftar unit">
+      <div class="list-head"><span>Unit / keterangan</span><span>Status</span><span style="text-align:right">Ubah status / hapus</span></div>
+      <div id="rows"></div>
+    </section>
+    <div class="foot"><span>Urut otomatis berdasarkan nomor unit</span><span id="shownCount">57 unit</span></div>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    const initialData = [
+      [8,'', 'ready'],[10,'','ready'],[20,'','ready'],[21,'','ready'],[23,'','ready'],[28,'','ready'],[36,'','ready'],[38,'','ready'],[56,'','ready'],[62,'Howo','ready'],[70,'','ready'],[100,'','ready'],[101,'','ready'],[112,'','ready'],[113,'','ready'],[118,'Howo','ready'],[122,'','ready'],[133,'','ready'],[135,'','ready'],[138,'','ready'],[151,'','ready'],[152,'','ready'],[155,'','ready'],[157,'','ready'],[161,'','ready'],[166,'','ready'],[168,'','ready'],[171,'','ready'],[176,'','ready'],[202,'','ready'],[203,'','ready'],[215,'','ready'],[218,'','ready'],[236,'','ready'],[237,'','ready'],[238,'','ready'],[252,'','ready'],[268,'','ready'],[270,'','ready'],[271,'','ready'],[272,'','ready'],[303,'','ready'],[308,'','ready'],[313,'','ready'],[315,'','ready'],[317,'','ready'],[1,'Tyre','breakdown'],[18,'Tyre','breakdown'],[63,'Disc Clutch','breakdown'],[127,'Tyre','breakdown'],[130,'AC mati','breakdown'],[156,'Tyre','breakdown'],[177,'Tyre','breakdown'],[178,'Tyre','breakdown'],[182,'Tyre','breakdown'],[263,'Tyre','breakdown'],[306,'Tyre','breakdown']
+    ].map(([number,note,status])=>({number,note,status}));
+    const STORAGE_KEY='dtdbk-units-v1';
+    let units;
+    try { const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)); units=Array.isArray(saved)?saved:initialData; } catch { units=initialData; }
+    let filter='all';
+    const $=id=>document.getElementById(id);
+    const pad=n=>String(n).padStart(3,'0');
+    const save=()=>localStorage.setItem(STORAGE_KEY,JSON.stringify(units));
+    function render(){
+      units.sort((a,b)=>Number(a.number)-Number(b.number));
+      const ready=units.filter(u=>u.status==='ready'), down=units.filter(u=>u.status==='breakdown');
+      $('totalCount').textContent=units.length;$('readyCount').textContent=ready.length;$('downCount').textContent=down.length;
+      $('readyCopyCount').textContent=`(${ready.length})`;$('downCopyCount').textContent=`(${down.length})`;
+      $('readyText').value=ready.map(u=>`DT ${pad(u.number)}`).join(', ');
+      $('downText').value=down.map(u=>`DT ${pad(u.number)}${u.note?` : ${u.note}`:''}`).join(', ');
+      const q=$('search').value.trim().toLowerCase();
+      const shown=units.filter(u=>(filter==='all'||u.status===filter)&&(!q||`dt ${pad(u.number)} ${u.note}`.toLowerCase().includes(q)));
+      $('shownCount').textContent=`${shown.length} dari ${units.length} unit`;
+      $('rows').innerHTML=shown.length?shown.map(u=>`<div class="unit-row">
+        <div class="unit-name">DT ${pad(u.number)}${u.note?`<span class="unit-note">${escapeHtml(u.note)}</span>`:''}</div>
+        <div><span class="status ${u.status}">${u.status==='ready'?'● Ready':'● Breakdown'}</span></div>
+        <div class="row-actions"><button class="btn status-btn ready-btn" data-action="ready" data-number="${u.number}" aria-label="Tandai DT ${pad(u.number)} ready">Ready</button><button class="btn status-btn down-btn" data-action="breakdown" data-number="${u.number}" aria-label="Tandai DT ${pad(u.number)} breakdown">Breakdown</button><button class="btn delete-btn" data-action="delete" data-number="${u.number}" aria-label="Hapus DT ${pad(u.number)}" title="Hapus unit">Hapus</button></div>
+      </div>`).join(''):'<div class="empty">Tidak ada unit yang cocok.</div>';
+    }
+    function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+    let toastTimer;function toast(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),1900)}
+    $('search').addEventListener('input',render);
+    document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{filter=btn.dataset.filter;document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('active',b===btn));render()}));
+    $('showAdd').addEventListener('click',()=>{$('addForm').classList.toggle('open');if($('addForm').classList.contains('open'))$('unitInput').focus()});
+    $('addForm').addEventListener('submit',e=>{e.preventDefault();const number=Number($('unitInput').value.trim());const note=$('noteInput').value.trim();if(!Number.isInteger(number)||number<0||number>9999){toast('Masukkan nomor unit yang valid.');return}if(units.some(u=>Number(u.number)===number)){toast(`DT ${pad(number)} sudah terdaftar.`);return}units.push({number,note,status:'ready'});save();e.target.reset();render();toast(`DT ${pad(number)} ditambahkan sebagai Ready.`)});
+    $('rows').addEventListener('click',e=>{const btn=e.target.closest('button[data-action]');if(!btn)return;const number=Number(btn.dataset.number);if(btn.dataset.action==='delete'){if(!confirm(`Hapus DT ${pad(number)} dari daftar?`))return;units=units.filter(u=>Number(u.number)!==number);save();render();toast(`DT ${pad(number)} dihapus.`);return}const unit=units.find(u=>Number(u.number)===number);if(unit){unit.status=btn.dataset.action;save();render();toast(`DT ${pad(number)}: ${unit.status==='ready'?'Ready':'Breakdown'}.`)}});
+    async function copyText(text){try{await navigator.clipboard.writeText(text);return true}catch{const area=document.createElement('textarea');area.value=text;area.style.position='fixed';area.style.opacity='0';document.body.appendChild(area);area.select();const ok=document.execCommand('copy');area.remove();return ok}}
+    document.querySelectorAll('[data-copy]').forEach(btn=>btn.addEventListener('click',async()=>{const text=btn.dataset.copy==='ready'?$ ('readyText').value:$('downText').value;if(!text){toast('Belum ada unit untuk disalin.');return}toast(await copyText(text)?'Daftar berhasil disalin.':'Gagal menyalin daftar.')}));
+    render();
+  </script>
+</body>
+</html>
